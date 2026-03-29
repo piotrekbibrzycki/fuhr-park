@@ -1,0 +1,14 @@
+### GET request to example server
+POST http://localhost:8080/trips
+Content-Type: application/json
+
+{
+  "startLocation": "Krakow",
+  "endLocation": "Berlin",
+  "distance": 752,
+  "startDate": "2026-03-27",
+  "truckId":"f6a6acc4-f92c-4520-bd01-a73a2cb07c89",
+  "driverId": "a128c568-d0b6-42ac-b5f1-8ff9e86df3a8"
+}
+
+###

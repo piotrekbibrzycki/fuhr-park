@@ -1,0 +1,12 @@
+### GET request to example server
+POST http://localhost:8080/trucks
+Content-Type: application/json
+
+{
+  "licensePlate" : "KOS12345",
+  "brand" : "Mercedes",
+  "capacity" : 120.5,
+  "driverId": "ce4c4ae2-1fa1-41a2-949f-28d13ec45af5"
+}
+
+###

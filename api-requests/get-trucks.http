@@ -1,0 +1,3 @@
+### GET request to get all trucks
+GET http://localhost:8080/trucks
+###

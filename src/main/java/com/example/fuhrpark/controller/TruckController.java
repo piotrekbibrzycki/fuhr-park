@@ -1,5 +1,6 @@
 package com.example.fuhrpark.controller;
 
+import com.example.fuhrpark.dto.DriverResponseDto;
 import com.example.fuhrpark.dto.TruckRequestDto;
 import com.example.fuhrpark.dto.TruckResponseDto;
 import com.example.fuhrpark.service.TruckService;
@@ -27,6 +28,13 @@ public class TruckController {
         Page<TruckResponseDto> trucks = truckService.getTrucks(page,size);
         return ResponseEntity.ok().body(trucks);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TruckResponseDto> getTruckById(@PathVariable UUID id) {
+        TruckResponseDto truck = truckService.getTruckById(id);
+        return ResponseEntity.ok().body(truck);
+    }
+
 
     @PostMapping
     public ResponseEntity<TruckResponseDto> createTruck(@Valid @RequestBody TruckRequestDto truckRequestDto) {

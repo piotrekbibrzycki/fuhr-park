@@ -35,6 +35,12 @@ public class DriverController {
 
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<DriverResponseDto> getDriverById(@PathVariable UUID id) {
+        DriverResponseDto driver = driverService.getDriverById(id);
+        return ResponseEntity.ok().body(driver);
+    }
+
     @GetMapping("/{id}/trips")
     public ResponseEntity<List<TripResponseDto>> getTripsByDriver(@PathVariable UUID id) {
         List<TripResponseDto> trips = tripService.getTripsByDriver(id);

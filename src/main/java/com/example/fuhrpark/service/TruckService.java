@@ -1,5 +1,6 @@
 package com.example.fuhrpark.service;
 
+import com.example.fuhrpark.dto.DriverResponseDto;
 import com.example.fuhrpark.dto.TruckRequestDto;
 import com.example.fuhrpark.dto.TruckResponseDto;
 import com.example.fuhrpark.model.Truck;
@@ -10,8 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.UUID;
 
 @Service
@@ -24,6 +24,10 @@ public class TruckService {
 
     public Page<TruckResponseDto> getTrucks(int page, int size) {
         return truckRepository.findByIsActiveTrue(PageRequest.of(page,size)).map(TruckResponseDto::toDto);
+    }
+
+    public TruckResponseDto getTruckById(UUID id) {
+        return truckRepository.findById(id).map(TruckResponseDto::toDto).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciężarówka o podanym ID nie istnieje"));
     }
 
     public TruckResponseDto createTruck(TruckRequestDto truckRequestDto) {

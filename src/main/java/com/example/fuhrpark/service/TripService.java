@@ -43,6 +43,10 @@ public class TripService {
         return tripRepository.findAll(PageRequest.of(page,size)).map(TripResponseDto::toDto);
     }
 
+    public TripResponseDto getTripById(UUID id) {
+        return tripRepository.findById(id).map(TripResponseDto::toDto).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Trasa o podanym ID nie istnieje"));
+    }
+
     public List<TripResponseDto> getTripsByDriver(UUID driverId) {
 
         if (!driverRepository.existsById(driverId)) {

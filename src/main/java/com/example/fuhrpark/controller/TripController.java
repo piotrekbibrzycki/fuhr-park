@@ -30,11 +30,16 @@ public class TripController {
 
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<TripResponseDto> getTripById(@PathVariable UUID id) {
+        TripResponseDto trip = tripService.getTripById(id);
+        return ResponseEntity.ok().body(trip);
+    }
+
     @PostMapping
     public ResponseEntity<TripResponseDto> createTrip(@Valid @RequestBody TripRequestDto tripRequestDto) {
         TripResponseDto tripResponseDto = tripService.createTrip(tripRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(tripResponseDto);
-
 
     }
 

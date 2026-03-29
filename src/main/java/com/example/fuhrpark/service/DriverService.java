@@ -24,6 +24,10 @@ public class DriverService {
         return driverRepository.findByIsActiveTrue(PageRequest.of(page,size)).map(DriverResponseDto::toDto);
     }
 
+    public DriverResponseDto getDriverById(UUID id) {
+        return driverRepository.findById(id).map(DriverResponseDto::toDto).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Kierowca o podanym ID nie istnieje"));
+    }
+
     public DriverResponseDto createDriver(DriverRequestDto driverRequestDto) {
         Driver driver = DriverRequestDto.toEntity(driverRequestDto);
         Driver savedDriver = driverRepository.save(driver);
@@ -31,7 +35,7 @@ public class DriverService {
     }
 
     public DriverResponseDto updateDriver(UUID id, DriverRequestDto driverRequestDto) {
-        Driver driver = driverRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Kierowca o podanym ID nie istnieje."));
+        Driver driver = driverRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Kierowca o podanym ID nie istnieje"));
         driver.setFirstName(driverRequestDto.firstName());
         driver.setLastName(driverRequestDto.lastName());
         Driver updatedDriver = driverRepository.save(driver);
@@ -39,7 +43,7 @@ public class DriverService {
     }
 
     public void deleteDriver(UUID id) {
-        Driver driver = driverRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Kierowca o podanym ID nie istnieje."));
+        Driver driver = driverRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Kierowca o podanym ID nie istnieje"));
         driver.setActive(false);
         driverRepository.save(driver);
 

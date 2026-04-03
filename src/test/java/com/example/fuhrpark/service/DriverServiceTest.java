@@ -12,13 +12,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -122,5 +122,36 @@ class DriverServiceTest {
         assertNotNull(result);
         assertEquals("newName", result.firstName());
         assertEquals("newSurname", result.lastName());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenDriverNotFound() {
+        UUID driverId = UUID.randomUUID();
+        when(driverRepository.findById(driverId)).thenReturn(Optional.empty());
+
+        assertThrows(ResponseStatusException.class, ()-> driverService.getDriverById(driverId));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenUpdatingNonExistentDriver() {
+        UUID driverId = UUID.randomUUID();
+        DriverRequestDto request = new DriverRequestDto("Jan", "Kowalski");
+        when(driverRepository.findById(driverId)).thenReturn(Optional.empty());
+
+        assertThrows(ResponseStatusException.class, ()-> driverService.updateDriver(driverId, request));
+    }
+
+    @Test
+    void shouldSoftDeleteDriver() {
+        UUID driverId = UUID.randomUUID();
+        Driver driver = new Driver ();
+        driver.setId(driverId);
+        driver.setActive(true);
+
+        when(driverRepository.findById(driverId)).thenReturn(Optional.of(driver));
+        when(driverRepository.save(any(Driver.class))).thenReturn(driver);
+
+        driverService.deleteDriver(driverId);
+        verify(driverRepository).save(argThat(d->!d.isActive()));
     }
 }

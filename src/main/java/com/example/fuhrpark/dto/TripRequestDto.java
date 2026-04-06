@@ -1,6 +1,7 @@
 package com.example.fuhrpark.dto;
 
 import com.example.fuhrpark.model.Trip;
+import com.example.fuhrpark.validation.FutureOrToday;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -17,6 +18,7 @@ public record TripRequestDto(
         @Positive(message = "Dystans musi być większy od 0")
         Double distance,
         @NotNull(message = "Początkowa data nie może być pusta")
+        @FutureOrToday
         LocalDate startDate,
         @NotNull(message = "ID ciężarówki nie może być puste")
         UUID truckId,

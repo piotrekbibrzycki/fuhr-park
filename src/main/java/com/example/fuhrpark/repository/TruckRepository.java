@@ -14,4 +14,7 @@ import java.util.UUID;
 
 public interface TruckRepository extends JpaRepository<Truck, UUID> {
     Page<Truck> findByIsActiveTrue(Pageable pageable);
+
+    int countByIsActiveTrue();
+
 }

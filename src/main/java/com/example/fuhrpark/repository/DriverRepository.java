@@ -12,4 +12,5 @@ import java.util.UUID;
 
 public interface DriverRepository extends JpaRepository<Driver, UUID> {
     Page<Driver> findByIsActiveTrue(Pageable pageable);
+    int countByIsActiveTrue();
 }

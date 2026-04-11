@@ -56,3 +56,7 @@ Start PostgreSQL with Docker Compose:
 ```bash
 docker compose up -d
 ```
+
+## techstack
+
+[![My Stack](https://skillicons.dev/icons?i=java,spring,postgres,docker&theme=light)](https://skillicons.dev)

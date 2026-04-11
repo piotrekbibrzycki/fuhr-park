@@ -62,14 +62,14 @@ class TruckServiceTest {
         truck.setBrand("Volvo");
         truck.setCapacity(18.0);
 
-        when(truckRepository.findById(truckId)).thenReturn(Optional.of(truck));
+        when(truckRepository.findByIdAndActiveTrue(truckId)).thenReturn(Optional.of(truck));
 
         TruckResponseDto result = truckService.getTruckById(truckId);
 
         assertNotNull(result);
         assertEquals(truckId, result.id());
         assertEquals("Volvo", result.brand());
-        verify(truckRepository, times(1)).findById(truckId);
+        verify(truckRepository, times(1)).findByIdAndActiveTrue(truckId);
     }
 
     @Test
@@ -83,14 +83,14 @@ class TruckServiceTest {
 
         Page<Truck> truckPage = new PageImpl<>(List.of(truck));
 
-        when(truckRepository.findByIsActiveTrue(any(PageRequest.class))).thenReturn(truckPage);
+        when(truckRepository.findByActiveTrue(any(PageRequest.class))).thenReturn(truckPage);
 
         Page<TruckResponseDto> result = truckService.getTrucks(0, 10);
 
         assertNotNull(result);
         assertEquals(1, result.getTotalElements());
         assertEquals("Volvo", result.getContent().getFirst().brand());
-        verify(truckRepository, times(1)).findByIsActiveTrue(any(PageRequest.class));
+        verify(truckRepository, times(1)).findByActiveTrue(any(PageRequest.class));
     }
 
     @Test
@@ -112,7 +112,7 @@ class TruckServiceTest {
         updatedTruck.setCapacity(24.0);
         updatedTruck.setActive(true);
 
-        when(truckRepository.findById(truckId)).thenReturn(Optional.of(existingTruck));
+        when(truckRepository.findByIdAndActiveTrue(truckId)).thenReturn(Optional.of(existingTruck));
         when(truckRepository.save(any(Truck.class))).thenReturn(updatedTruck);
 
         TruckResponseDto result = truckService.updateTruck(truckId, updateRequest);
@@ -126,7 +126,7 @@ class TruckServiceTest {
     @Test
     void shouldThrowExceptionWhenTruckNotFound() {
         UUID truckId = UUID.randomUUID();
-        when(truckRepository.findById(truckId)).thenReturn(Optional.empty());
+        when(truckRepository.findByIdAndActiveTrue(truckId)).thenReturn(Optional.empty());
 
         assertThrows(ResponseStatusException.class, () -> truckService.getTruckById(truckId));
     }
@@ -135,7 +135,7 @@ class TruckServiceTest {
     void shouldThrowExceptionWhenUpdatingNonExistentTruck() {
         UUID truckId = UUID.randomUUID();
         TruckRequestDto request = new TruckRequestDto("KR 12345", "Volvo", 18.0);
-        when(truckRepository.findById(truckId)).thenReturn(Optional.empty());
+        when(truckRepository.findByIdAndActiveTrue(truckId)).thenReturn(Optional.empty());
 
         assertThrows(ResponseStatusException.class, () -> truckService.updateTruck(truckId, request));
     }
@@ -147,7 +147,7 @@ class TruckServiceTest {
         truck.setId(truckId);
         truck.setActive(true);
 
-        when(truckRepository.findById(truckId)).thenReturn(Optional.of(truck));
+        when(truckRepository.findByIdAndActiveTrue(truckId)).thenReturn(Optional.of(truck));
         when(truckRepository.save(any(Truck.class))).thenReturn(truck);
 
         truckService.deleteTruck(truckId);

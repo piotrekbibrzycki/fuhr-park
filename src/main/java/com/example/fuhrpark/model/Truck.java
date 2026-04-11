@@ -29,7 +29,7 @@ public class Truck {
     private Double capacity;
 
     @Column(name = "is_active", nullable = false)
-    private boolean isActive = true;
+    private boolean active = true;
 
     @OneToMany(mappedBy = "truck")
     private List<Trip> trips = new ArrayList<>();

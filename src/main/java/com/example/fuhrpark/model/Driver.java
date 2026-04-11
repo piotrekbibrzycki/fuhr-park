@@ -25,7 +25,7 @@ public class Driver {
     private String lastName;
 
     @Column(name = "is_active", nullable = false)
-    private boolean isActive = true;
+    private boolean active = true;
 
     @OneToMany(mappedBy = "driver")
     private List<Trip> trips = new ArrayList<>();

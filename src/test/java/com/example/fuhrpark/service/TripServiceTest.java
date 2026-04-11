@@ -86,8 +86,8 @@ class TripServiceTest {
 
         Trip savedTrip = createTrip(truck, driver, TripStatus.PLANNED);
 
-        when(truckRepository.findById(truck.getId())).thenReturn(Optional.of(truck));
-        when(driverRepository.findById(driver.getId())).thenReturn(Optional.of(driver));
+        when(truckRepository.findByIdAndActiveTrue(truck.getId())).thenReturn(Optional.of(truck));
+        when(driverRepository.findByIdAndActiveTrue(driver.getId())).thenReturn(Optional.of(driver));
         when(tripRepository.existsByTruckIdAndStatusIn(eq(truck.getId()), any())).thenReturn(false);
         when(tripRepository.existsByDriverIdAndStatusIn(eq(driver.getId()), any())).thenReturn(false);
         when(tripRepository.save(any(Trip.class))).thenReturn(savedTrip);
@@ -135,7 +135,7 @@ class TripServiceTest {
         Driver driver = createDriver();
         Trip trip = createTrip(truck, driver, TripStatus.PLANNED);
 
-        when(driverRepository.existsById(driver.getId())).thenReturn(true);
+        when(driverRepository.existsByIdAndActiveTrue(driver.getId())).thenReturn(true);
         when(tripRepository.findByDriverId(driver.getId())).thenReturn(List.of(trip));
 
         List<TripResponseDto> result = tripService.getTripsByDriver(driver.getId());
@@ -162,8 +162,8 @@ class TripServiceTest {
                 truck.getId(), driver.getId()
         );
 
-        when(truckRepository.findById(truck.getId())).thenReturn(Optional.of(truck));
-        when(driverRepository.findById(driver.getId())).thenReturn(Optional.of(driver));
+        when(truckRepository.findByIdAndActiveTrue(truck.getId())).thenReturn(Optional.of(truck));
+        when(driverRepository.findByIdAndActiveTrue(driver.getId())).thenReturn(Optional.of(driver));
         when(tripRepository.existsByTruckIdAndStatusIn(eq(truck.getId()), any())).thenReturn(true);
 
         assertThrows(ResponseStatusException.class, () -> tripService.createTrip(request));
@@ -179,8 +179,8 @@ class TripServiceTest {
                 truck.getId(), driver.getId()
         );
 
-        when(truckRepository.findById(truck.getId())).thenReturn(Optional.of(truck));
-        when(driverRepository.findById(driver.getId())).thenReturn(Optional.of(driver));
+        when(truckRepository.findByIdAndActiveTrue(truck.getId())).thenReturn(Optional.of(truck));
+        when(driverRepository.findByIdAndActiveTrue(driver.getId())).thenReturn(Optional.of(driver));
         when(tripRepository.existsByTruckIdAndStatusIn(eq(truck.getId()), any())).thenReturn(false);
         when(tripRepository.existsByDriverIdAndStatusIn(eq(driver.getId()), any())).thenReturn(true);
 
@@ -246,7 +246,7 @@ class TripServiceTest {
     @Test
     void shouldThrowWhenGettingTripsByNonExistentDriver() {
         UUID driverId = UUID.randomUUID();
-        when(driverRepository.existsById(driverId)).thenReturn(false);
+        when(driverRepository.existsByIdAndActiveTrue(driverId)).thenReturn(false);
 
         assertThrows(ResponseStatusException.class, () -> tripService.getTripsByDriver(driverId));
     }

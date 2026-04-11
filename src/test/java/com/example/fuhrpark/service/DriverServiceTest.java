@@ -61,14 +61,14 @@ class DriverServiceTest {
         driver.setFirstName("Jan");
         driver.setLastName("Kowalski");
 
-        when(driverRepository.findById(driverId)).thenReturn(Optional.of(driver));
+        when(driverRepository.findByIdAndActiveTrue(driverId)).thenReturn(Optional.of(driver));
 
         DriverResponseDto result = driverService.getDriverById(driverId);
 
         assertNotNull(result);
         assertEquals(driverId, result.driverId());
         assertEquals("Jan",result.firstName());
-        verify(driverRepository, times(1)).findById(driverId);
+        verify(driverRepository, times(1)).findByIdAndActiveTrue(driverId);
 
     }
 
@@ -86,7 +86,7 @@ class DriverServiceTest {
 
         Page<Driver> driverPage = new PageImpl<>(List.of(driver));
 
-        when(driverRepository.findByIsActiveTrue(any(PageRequest.class))).thenReturn(driverPage);
+        when(driverRepository.findByActiveTrue(any(PageRequest.class))).thenReturn(driverPage);
 
         Page<DriverResponseDto> result = driverService.getDrivers(page,size);
 
@@ -94,7 +94,7 @@ class DriverServiceTest {
         assertEquals(1, result.getTotalElements());
         assertEquals("Jan", result.getContent().getFirst().firstName());
 
-        verify(driverRepository, times(1)).findByIsActiveTrue(any(PageRequest.class));
+        verify(driverRepository, times(1)).findByActiveTrue(any(PageRequest.class));
     }
 
     @Test
@@ -114,7 +114,7 @@ class DriverServiceTest {
         updatedDriver.setLastName("newSurname");
         updatedDriver.setActive(true);
 
-        when(driverRepository.findById(driverId)).thenReturn(Optional.of(existingDriver));
+        when(driverRepository.findByIdAndActiveTrue(driverId)).thenReturn(Optional.of(existingDriver));
         when(driverRepository.save(any(Driver.class))).thenReturn(updatedDriver);
 
         DriverResponseDto result = driverService.updateDriver(driverId, updateRequest);
@@ -127,7 +127,7 @@ class DriverServiceTest {
     @Test
     void shouldThrowExceptionWhenDriverNotFound() {
         UUID driverId = UUID.randomUUID();
-        when(driverRepository.findById(driverId)).thenReturn(Optional.empty());
+        when(driverRepository.findByIdAndActiveTrue(driverId)).thenReturn(Optional.empty());
 
         assertThrows(ResponseStatusException.class, ()-> driverService.getDriverById(driverId));
     }
@@ -136,7 +136,7 @@ class DriverServiceTest {
     void shouldThrowExceptionWhenUpdatingNonExistentDriver() {
         UUID driverId = UUID.randomUUID();
         DriverRequestDto request = new DriverRequestDto("Jan", "Kowalski");
-        when(driverRepository.findById(driverId)).thenReturn(Optional.empty());
+        when(driverRepository.findByIdAndActiveTrue(driverId)).thenReturn(Optional.empty());
 
         assertThrows(ResponseStatusException.class, ()-> driverService.updateDriver(driverId, request));
     }
@@ -148,7 +148,7 @@ class DriverServiceTest {
         driver.setId(driverId);
         driver.setActive(true);
 
-        when(driverRepository.findById(driverId)).thenReturn(Optional.of(driver));
+        when(driverRepository.findByIdAndActiveTrue(driverId)).thenReturn(Optional.of(driver));
         when(driverRepository.save(any(Driver.class))).thenReturn(driver);
 
         driverService.deleteDriver(driverId);

@@ -30,8 +30,8 @@ public class FleetStatsService {
 
 
     public FleetStatsDto getStats() {
-        int activeDrivers = driverRepository.countByIsActiveTrue();
-        int activeTrucks = truckRepository.countByIsActiveTrue();
+        int activeDrivers = driverRepository.countByActiveTrue();
+        int activeTrucks = truckRepository.countByActiveTrue();
 
         List<Trip> allTrips = tripRepository.findAll();
 

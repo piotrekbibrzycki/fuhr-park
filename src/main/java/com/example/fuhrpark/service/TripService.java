@@ -54,7 +54,7 @@ public class TripService {
 
     public List<TripResponseDto> getTripsByDriver(UUID driverId) {
 
-        if (!driverRepository.existsById(driverId)) {
+        if (!driverRepository.existsByIdAndActiveTrue(driverId)) {
             log.warn("Trips lookup failed - driver not found: driverId ={}", driverId);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Kierowca o podanym ID nie istnieje");
         }
@@ -62,11 +62,11 @@ public class TripService {
     }
 
     public TripResponseDto createTrip(TripRequestDto tripRequestDto) {
-        Truck truck = truckRepository.findById(tripRequestDto.truckId()).orElseThrow(() -> {
+        Truck truck = truckRepository.findByIdAndActiveTrue(tripRequestDto.truckId()).orElseThrow(() -> {
             log.warn("Trip creation failed - truck not found: truckId={}", tripRequestDto.truckId());
             return new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciężarówka o podanym ID nie istnieje.");
         });
-        Driver driver = driverRepository.findById(tripRequestDto.driverId()).orElseThrow(() -> {
+        Driver driver = driverRepository.findByIdAndActiveTrue(tripRequestDto.driverId()).orElseThrow(() -> {
             log.warn("Trip creation failed - driver not found: driverId = {}", tripRequestDto.driverId());
             return new ResponseStatusException(HttpStatus.NOT_FOUND, "Kierowca o podanym ID nie istnieje.");
         });
@@ -96,18 +96,18 @@ public class TripService {
             log.warn("Trip update failed - trip not found: id={}", id);
             return new ResponseStatusException(HttpStatus.NOT_FOUND, "Trasa o podanym ID nie istnieje");
         });
-        Truck truck = truckRepository.findById(tripRequestDto.truckId()).orElseThrow(() -> {
+        Truck truck = truckRepository.findByIdAndActiveTrue(tripRequestDto.truckId()).orElseThrow(() -> {
             log.warn("Trip update failed - truck not found: truckId={}", tripRequestDto.truckId());
             return new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciężarówka o podanym ID nie istnieje");
         });
-        Driver driver = driverRepository.findById(tripRequestDto.driverId()).orElseThrow(() -> {
+        Driver driver = driverRepository.findByIdAndActiveTrue(tripRequestDto.driverId()).orElseThrow(() -> {
             log.warn("Trip update failed - driver not found: driverId={}", tripRequestDto.driverId());
             return new ResponseStatusException(HttpStatus.NOT_FOUND, "Kierowca o podanym ID nie istnieje");
         });
 
         if (trip.getStatus() == TripStatus.IN_PROGRESS) {
             log.warn("Trip update failed - trip in progress: id={}", id);
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Nie można edytować zakończonej trasy");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Nie można edytować trasy w trakcie realizacji");
         }
         List<TripStatus> activeStatuses = List.of(TripStatus.PLANNED, TripStatus.IN_PROGRESS);
         if (tripRepository.existsByTruckIdAndStatusInAndIdNot(truck.getId(), activeStatuses, id)) {

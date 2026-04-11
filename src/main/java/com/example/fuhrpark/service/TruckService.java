@@ -23,11 +23,11 @@ public class TruckService {
     }
 
     public Page<TruckResponseDto> getTrucks(int page, int size) {
-        return truckRepository.findByIsActiveTrue(PageRequest.of(page, size)).map(TruckResponseDto::toDto);
+        return truckRepository.findByActiveTrue(PageRequest.of(page, size)).map(TruckResponseDto::toDto);
     }
 
     public TruckResponseDto getTruckById(UUID id) {
-        return truckRepository.findById(id).map(TruckResponseDto::toDto).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciężarówka o podanym ID nie istnieje"));
+        return truckRepository.findByIdAndActiveTrue(id).map(TruckResponseDto::toDto).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciężarówka o podanym ID nie istnieje"));
     }
 
     public TruckResponseDto createTruck(TruckRequestDto truckRequestDto) {
@@ -38,7 +38,7 @@ public class TruckService {
     }
 
     public TruckResponseDto updateTruck(UUID id, TruckRequestDto truckRequestDto) {
-        Truck truck = truckRepository.findById(id).orElseThrow(() -> {
+        Truck truck = truckRepository.findByIdAndActiveTrue(id).orElseThrow(() -> {
             log.warn("Truck not found id={}", id);
             return new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciężarówka o podanym ID nie istnieje.");
         });
@@ -51,7 +51,7 @@ public class TruckService {
     }
 
     public void deleteTruck(UUID id) {
-        Truck truck = truckRepository.findById(id).orElseThrow(() -> {
+        Truck truck = truckRepository.findByIdAndActiveTrue(id).orElseThrow(() -> {
             log.warn("Truck not found for deletion: id={}", id);
             return new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciężarówka o podanym ID nie istnieje.");
         });

@@ -2,6 +2,8 @@ package com.example.fuhrpark.repository;
 
 import com.example.fuhrpark.model.Trip;
 import com.example.fuhrpark.model.TripStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -14,4 +16,13 @@ public interface TripRepository extends JpaRepository<Trip, UUID> {
     boolean existsByTruckIdAndStatusIn(UUID id, List<TripStatus> statuses);
     boolean existsByDriverIdAndStatusInAndIdNot(UUID driverId, List<TripStatus> statuses, UUID tripId);
     boolean existsByTruckIdAndStatusInAndIdNot(UUID truckId, List<TripStatus> statuses, UUID tripId);
+
+    Page<Trip> findByStatus(TripStatus status, Pageable pageable);
+    Page<Trip> findByDriverId(UUID driverId, Pageable pageable);
+    Page<Trip> findByTruckId(UUID truckId, Pageable pageable);
+    Page<Trip> findByStatusAndDriverId(TripStatus status, UUID driverId, Pageable pageable);
+    Page<Trip> findByStatusAndTruckId(TripStatus status, UUID truckId, Pageable pageable);
+    Page<Trip> findByDriverIdAndTruckId(UUID driverId, UUID truckId, Pageable pageable);
+    Page<Trip> findByStatusAndDriverIdAndTruckId(TripStatus status, UUID driverId, UUID truckId, Pageable pageable);
+
 }

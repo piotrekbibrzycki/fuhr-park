@@ -41,8 +41,35 @@ public class TripService {
         this.driverRepository = driverRepository;
     }
 
-    public Page<TripResponseDto> getTrips(int page, int size) {
-        return tripRepository.findAll(PageRequest.of(page, size)).map(TripResponseDto::toDto);
+    public Page<TripResponseDto> getTrips(int page, int size, TripStatus status, UUID driverId, UUID truckId) {
+        PageRequest pageRequest = PageRequest.of(page,size);
+
+        if (status == null && driverId == null && truckId == null) {
+            return tripRepository.findAll(pageRequest).map(TripResponseDto::toDto);
+        }
+        else if (status != null && driverId == null && truckId == null) {
+            return tripRepository.findByStatus(status, pageRequest).map(TripResponseDto::toDto);
+        }
+        else if (status == null && driverId != null && truckId == null) {
+            return tripRepository.findByDriverId(driverId, pageRequest).map(TripResponseDto::toDto);
+        }
+        else if (status == null && driverId == null && truckId != null) {
+            return tripRepository.findByTruckId(truckId, pageRequest).map(TripResponseDto::toDto);
+        }
+        else if (status != null && driverId != null && truckId == null) {
+            return tripRepository.findByStatusAndDriverId(status, driverId, pageRequest).map(TripResponseDto::toDto);
+        }
+        else if (status != null && driverId == null && truckId != null) {
+            return tripRepository.findByStatusAndTruckId(status, truckId, pageRequest).map(TripResponseDto::toDto);
+        }
+        else if (status == null && driverId != null && truckId != null) {
+            return tripRepository.findByDriverIdAndTruckId(driverId, truckId, pageRequest).map(TripResponseDto::toDto);
+        }
+
+        return tripRepository.findByStatusAndDriverIdAndTruckId(status, driverId, truckId, pageRequest)
+                .map(TripResponseDto::toDto);
+
+
     }
 
     public TripResponseDto getTripById(UUID id) {

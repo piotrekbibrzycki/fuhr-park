@@ -3,6 +3,7 @@ package com.example.fuhrpark.controller;
 import com.example.fuhrpark.dto.TripRequestDto;
 import com.example.fuhrpark.dto.TripResponseDto;
 import com.example.fuhrpark.dto.TripStatusUpdateDto;
+import com.example.fuhrpark.model.TripStatus;
 import com.example.fuhrpark.service.TripService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -24,8 +25,12 @@ public class TripController {
 
     @GetMapping
     public ResponseEntity<Page<TripResponseDto>> getTrips(@RequestParam(defaultValue = "0") int page,
-                                                          @RequestParam(defaultValue = "10") int size) {
-        Page<TripResponseDto> trips = tripService.getTrips(page,size);
+                                                          @RequestParam(defaultValue = "10") int size,
+                                                          @RequestParam(required = false) TripStatus status,
+                                                          @RequestParam(required = false) UUID driverId,
+                                                          @RequestParam(required = false) UUID truckId)
+                                                           {
+        Page<TripResponseDto> trips = tripService.getTrips(page, size, status, driverId, truckId);
         return ResponseEntity.ok().body(trips);
 
     }

@@ -1,8 +1,0 @@
-### GET request to example server
-POST http://localhost:8080/drivers
-Content-Type: application/json
-
-{"firstName" : "Piotr"
-}
-
-###

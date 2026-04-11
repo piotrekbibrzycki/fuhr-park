@@ -48,3 +48,11 @@ GET /trips?status=PLANNED&driverId={driverId}&truckId={truckId}&page=0&size=10
 ## API documentation
 
 After starting the application, Swagger UI is available at `http://localhost:8080/swagger-ui/index.html`.
+
+## run locally
+
+Start PostgreSQL with Docker Compose:
+
+```bash
+docker compose up -d
+```

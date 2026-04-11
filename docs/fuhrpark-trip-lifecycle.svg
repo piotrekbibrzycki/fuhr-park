@@ -14,8 +14,8 @@
   text { font-family: "SF Mono", "Cascadia Code", "Fira Code", Consolas, monospace; }
 </style>
 <defs>
-  <marker id="a" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-    <path d="M0 0 L10 5 L0 10" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+    <path d="M2 2L8 5L2 8" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   </marker>
 </defs>
 
@@ -29,12 +29,12 @@
 <rect x="50" y="86" width="120" height="38" rx="3" fill="var(--box-bg)" stroke="var(--box-stroke)" stroke-width="0.7"/>
 <text x="110" y="106" text-anchor="middle" dominant-baseline="central" font-size="10" fill="var(--fg)">PLANNED</text>
 
-<line x1="170" y1="105" x2="210" y2="105" stroke="var(--fg2)" stroke-width="0.8" marker-end="url(#a)"/>
+<line x1="170" y1="105" x2="210" y2="105" stroke="var(--line)" stroke-width="0.8" marker-end="url(#a)"/>
 
 <rect x="210" y="86" width="120" height="38" rx="3" fill="var(--box-bg)" stroke="var(--box-stroke)" stroke-width="0.7"/>
 <text x="270" y="106" text-anchor="middle" dominant-baseline="central" font-size="10" fill="var(--fg)">IN_PROGRESS</text>
 
-<line x1="330" y1="105" x2="370" y2="105" stroke="var(--fg2)" stroke-width="0.8" marker-end="url(#a)"/>
+<line x1="330" y1="105" x2="370" y2="105" stroke="var(--line)" stroke-width="0.8" marker-end="url(#a)"/>
 
 <rect x="370" y="86" width="120" height="38" rx="3" fill="var(--box-bg)" stroke="var(--ok)" stroke-width="1.2"/>
 <text x="430" y="106" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="600" fill="var(--ok)">COMPLETED</text>
@@ -42,10 +42,8 @@
 <rect x="210" y="186" width="120" height="38" rx="3" fill="var(--box-bg)" stroke="var(--fail)" stroke-width="1.2"/>
 <text x="270" y="206" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="600" fill="var(--fail)">CANCELED</text>
 
-<path d="M 110 124 L 110 205 L 210 205" fill="none" stroke="var(--fg2)" stroke-width="0.8" marker-end="url(#a)"/>
+<path d="M 110 124 L 110 205 L 210 205" fill="none" stroke="var(--line)" stroke-width="0.8" marker-end="url(#a)"/>
 
-<line x1="270" y1="124" x2="270" y2="186" stroke="var(--fg2)" stroke-width="0.8" marker-end="url(#a)"/>
-
-
+<line x1="270" y1="124" x2="270" y2="186" stroke="var(--line)" stroke-width="0.8" marker-end="url(#a)"/>
 
 </svg>

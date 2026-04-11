@@ -124,7 +124,7 @@ class TripServiceTest {
         Page<Trip> tripPage = new PageImpl<>(List.of(trip));
         when(tripRepository.findAll(any(PageRequest.class))).thenReturn(tripPage);
 
-        Page<TripResponseDto> result = tripService.getTrips(0, 10);
+        Page<TripResponseDto> result = tripService.getTrips(0, 10, null, null ,null);
 
         assertEquals(1, result.getTotalElements());
     }
@@ -249,5 +249,52 @@ class TripServiceTest {
         when(driverRepository.existsByIdAndActiveTrue(driverId)).thenReturn(false);
 
         assertThrows(ResponseStatusException.class, () -> tripService.getTripsByDriver(driverId));
+    }
+
+    @Test
+    void shouldReturnTripsFilteredByStatus() {
+        Truck truck = createTruck();
+        Driver driver = createDriver();
+        Trip trip = createTrip(truck, driver, TripStatus.PLANNED);
+
+        Page<Trip> tripPage = new PageImpl<>(List.of(trip));
+        when(tripRepository.findByStatus(eq(TripStatus.PLANNED), any(PageRequest.class))).thenReturn(tripPage);
+
+        Page<TripResponseDto> result = tripService.getTrips(0, 10, TripStatus.PLANNED, null, null);
+
+        assertEquals(1, result.getTotalElements());
+        assertEquals(TripStatus.PLANNED, result.getContent().getFirst().status());
+    }
+
+    @Test
+    void shouldReturnTripsFilteredByDriverId() {
+        Truck truck = createTruck();
+        Driver driver = createDriver();
+        Trip trip = createTrip(truck, driver, TripStatus.PLANNED);
+
+        Page<Trip> tripPage = new PageImpl<>(List.of(trip));
+        when(tripRepository.findByDriverId(eq(driver.getId()), any(PageRequest.class))).thenReturn(tripPage);
+
+        Page<TripResponseDto> result = tripService.getTrips(0, 10, null, driver.getId(), null);
+
+        assertEquals(1, result.getTotalElements());
+        assertEquals(driver.getId(), result.getContent().getFirst().driverId());
+    }
+
+    @Test
+    void shouldReturnTripsFilteredByStatusAndDriverId() {
+        Truck truck = createTruck();
+        Driver driver = createDriver();
+        Trip trip = createTrip(truck, driver, TripStatus.IN_PROGRESS);
+
+        Page<Trip> tripPage = new PageImpl<>(List.of(trip));
+        when(tripRepository.findByStatusAndDriverId(eq(TripStatus.IN_PROGRESS), eq(driver.getId()), any(PageRequest.class)))
+                .thenReturn(tripPage);
+
+        Page<TripResponseDto> result = tripService.getTrips(0, 10, TripStatus.IN_PROGRESS, driver.getId(), null);
+
+        assertEquals(1, result.getTotalElements());
+        assertEquals(TripStatus.IN_PROGRESS, result.getContent().getFirst().status());
+        assertEquals(driver.getId(), result.getContent().getFirst().driverId());
     }
 }

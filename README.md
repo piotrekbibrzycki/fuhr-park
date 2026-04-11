@@ -34,6 +34,17 @@ Drivers and trucks are not physically removed from the database. Instead, they a
 
 FuhrPark includes a fleet statistics endpoint that aggregates operational data across drivers, trucks, and trips. The response covers active resources, trips grouped by status, completed distance, and simple ranking-style metrics such as the most active driver and truck.
 
+
+## trip filtering 
+
+The `/trips` endpoint supports optional filtering by trip status, driver, and truck. Results are returned with pagination.
+
+Example:
+
+```http
+GET /trips?status=PLANNED&driverId={driverId}&truckId={truckId}&page=0&size=10
+```
+
 ## API documentation
 
 After starting the application, Swagger UI is available at `http://localhost:8080/swagger-ui/index.html`.

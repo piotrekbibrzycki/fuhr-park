@@ -21,7 +21,7 @@ A truck cannot be assigned to more than one active trip, a driver cannot be assi
 
 ## trip lifecycle
 
-Trips move through a simple state machine based on four statuses: `PLANNED`, `IN_PROGRESS`, `COMPLETED`, and `CANCELED`. Only selected transitions are allowed, which helps keep the workflow consistent and prevents invalid updates.
+Trips move through a simple state machine based on four statuses: `PLANNED`, `IN_PROGRESS`, `COMPLETED`, and `CANCELED`. Only selected transitions are allowed, which prevents invalid updates.
 
 ![trip-lifecycle](docs/fuhrpark-trip-lifecycle.svg)
 

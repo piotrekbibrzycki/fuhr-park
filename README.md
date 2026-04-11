@@ -14,9 +14,10 @@ FuhrPark is a Spring Boot application connected to a single PostgreSQL database.
 
 ## domain rules
 
-The project goes beyond basic CRUD by enforcing operational constraints inside the application. A truck cannot be assigned to more than one active trip, a driver cannot be assigned to more than one active trip, trip status changes must follow the defined workflow, and inactive resources cannot be used in new assignments.
+The project extends basic CRUD by enforcing operational constraints inside the application.
 
-![domain-rules](docs/fuhrpark-domain-rules.svg)
+A truck cannot be assigned to more than one active trip, a driver cannot be assigned to more than one active trip, trip status changes must follow the defined workflow, and inactive resources cannot be used in new assignments.
+
 
 ## trip lifecycle
 
@@ -28,13 +29,10 @@ Trips move through a simple state machine based on four statuses: `PLANNED`, `IN
 
 Drivers and trucks are not physically removed from the database. Instead, they are marked as inactive and excluded from active operations. This preserves historical data while preventing inactive resources from being assigned or updated as if they were still available.
 
-![soft-delete](docs/fuhrpark-soft-delete.svg)
 
 ## reporting
 
 FuhrPark includes a fleet statistics endpoint that aggregates operational data across drivers, trucks, and trips. The response covers active resources, trips grouped by status, completed distance, and simple ranking-style metrics such as the most active driver and truck.
-
-![reporting](docs/fuhrpark-reporting.svg)
 
 ## API documentation
 

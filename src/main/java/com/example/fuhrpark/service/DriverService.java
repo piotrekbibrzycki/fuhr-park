@@ -38,7 +38,7 @@ public class DriverService {
     }
 
     public DriverResponseDto updateDriver(UUID id, DriverRequestDto driverRequestDto) {
-        Driver driver = driverRepository.findByIdAndActiveTrue(id).orElseThrow(()-> {
+        Driver driver = driverRepository.findByIdAndActiveTrue(id).orElseThrow(() -> {
             log.warn("Driver not found: id={}", id);
             return new ResponseStatusException(HttpStatus.NOT_FOUND, "Kierowca o podanym ID nie istnieje");
         });

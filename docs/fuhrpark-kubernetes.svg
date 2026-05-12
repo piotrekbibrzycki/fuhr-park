@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="400" viewBox="0 0 680 400">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --fg2: #6b6b6b;
+    --fg3: #999999;
+    --line: #cccccc;
+    --box-bg: #fafafa;
+    --box-stroke: #d4d4d4;
+  }
+  text { font-family: "SF Mono", "Cascadia Code", "Fira Code", Consolas, monospace; }
+</style>
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+    <path d="M2 2L8 5L2 8" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<rect width="680" height="400" fill="var(--bg)"/>
+
+<rect x="95" y="26" width="180" height="48" rx="3" fill="var(--box-bg)" stroke="var(--box-stroke)" stroke-width="0.7"/>
+<text x="185" y="45" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="500" fill="var(--fg)">REST client</text>
+<text x="185" y="60" text-anchor="middle" dominant-baseline="central" font-size="9" fill="var(--fg3)">NodePort :30080</text>
+
+<rect x="405" y="26" width="180" height="48" rx="3" fill="var(--box-bg)" stroke="var(--box-stroke)" stroke-width="0.7"/>
+<text x="495" y="45" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="500" fill="var(--fg)">truck tracker</text>
+<text x="495" y="60" text-anchor="middle" dominant-baseline="central" font-size="9" fill="var(--fg3)">NodePort :30090</text>
+
+<line x1="185" y1="74" x2="185" y2="112" stroke="var(--line)" stroke-width="0.8" marker-end="url(#a)"/>
+<line x1="495" y1="74" x2="495" y2="112" stroke="var(--line)" stroke-width="0.8" marker-end="url(#a)"/>
+
+<rect x="50" y="118" width="580" height="244" rx="4" fill="none" stroke="var(--line)" stroke-width="0.7" stroke-dasharray="4 3"/>
+<text x="66" y="134" font-size="9" fill="var(--fg3)" letter-spacing="0.5">kubernetes cluster</text>
+
+<rect x="115" y="162" width="450" height="46" rx="3" fill="var(--box-bg)" stroke="var(--box-stroke)" stroke-width="0.7"/>
+<text x="340" y="181" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="500" fill="var(--fg)">Service</text>
+<text x="340" y="196" text-anchor="middle" dominant-baseline="central" font-size="9" fill="var(--fg3)">routes HTTP :8080 and TCP :9090</text>
+
+<line x1="340" y1="208" x2="340" y2="236" stroke="var(--line)" stroke-width="0.8" marker-end="url(#a)"/>
+
+<rect x="160" y="236" width="360" height="72" rx="4" fill="none" stroke="var(--line)" stroke-width="0.7"/>
+<text x="176" y="252" font-size="9" fill="var(--fg3)" letter-spacing="0.5">Deployment / Pod</text>
+
+<rect x="230" y="264" width="220" height="32" rx="3" fill="var(--box-bg)" stroke="var(--box-stroke)" stroke-width="0.7"/>
+<text x="340" y="282" text-anchor="middle" dominant-baseline="central" font-size="10.5" fill="var(--fg)">fuhrpark container</text>
+
+<rect x="105" y="322" width="190" height="34" rx="3" fill="var(--box-bg)" stroke="var(--box-stroke)" stroke-width="0.7"/>
+<text x="200" y="340" text-anchor="middle" dominant-baseline="central" font-size="10" fill="var(--fg)">ConfigMap</text>
+
+<rect x="385" y="322" width="190" height="34" rx="3" fill="var(--box-bg)" stroke="var(--box-stroke)" stroke-width="0.7"/>
+<text x="480" y="340" text-anchor="middle" dominant-baseline="central" font-size="10" fill="var(--fg)">Secret</text>
+
+</svg>

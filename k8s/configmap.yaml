@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fuhrpark-config
+data:
+  SPRING_DATASOURCE_URL: jdbc:postgresql://fuhrpark-db:5432/fuhrpark
+  SPRING_DATASOURCE_USERNAME: user
+  TRACKING_TCP_ENABLED: "true"
+  TRACKING_TCP_PORT: "9090"

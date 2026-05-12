@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fuhrpark
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fuhrpark
+  template:
+    metadata:
+      labels:
+        app: fuhrpark
+    spec:
+      containers:
+        - name: fuhrpark
+          image: fuhrpark:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: tcp-tracking
+              containerPort: 9090
+          envFrom:
+            - configMapRef:
+                name: fuhrpark-config
+            - secretRef:
+                name: fuhrpark-secret

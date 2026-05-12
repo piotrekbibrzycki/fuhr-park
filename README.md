@@ -1,4 +1,3 @@
-[![CI](https://github.com/piotrekbibrzycki/fuhr-park/actions/workflows/ci.yml/badge.svg)](https://github.com/piotrekbibrzycki/fuhr-park/actions/workflows/ci.yml)
 ### fuhrpark
 
 ## description
